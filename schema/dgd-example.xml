@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="data-grafter-document.xsd">
+  <branch name="a">
+    <data value="wartość tekstowa w liściu"></data>
+  </branch>
+  <branch name="b">
+    <data value="z korzenia wychodzą gałęzie o etykietach a, b i c"></data>
+  </branch>
+  <branch name="c">
+    <branch name="tytuł">
+      <data value="witamy w poddrzewie na ścieżce /c/"></data>
+    </branch>
+    <branch name="wartości">
+      <branch name="1">
+        <data value="Ala ma drzewo"></data>
+      </branch>
+      <branch name="liczby">
+        <branch name="x">
+          <data value="123"></data>
+        </branch>
+        <branch name="y">
+          <data value="456"></data>
+        </branch>
+      </branch>
+      <branch name="z">
+        <data value="kot"></data>
+      </branch>
+    </branch>
+    <branch name="referencje">
+      <branch name="1">
+        <reference path="/c/wartości/1"></reference>
+      </branch>
+      <branch name="2">
+        <reference path="/c/wartości/*/x"></reference>
+      </branch>
+    </branch>
+    <branch name="funkcje">
+      <branch name="1">
+        <function name="sum">
+          <branch name="1">
+            <function name="multiply">
+              <branch name="1">
+                <data value="2"></data>
+              </branch>
+              <branch name="2">
+                <data value="2"></data>
+              </branch>
+            </function>
+          </branch>
+          <branch name="2">
+            <data value="3"></data>
+          </branch>
+        </function>
+      </branch>
+      <branch name="3">
+        <function name="select">
+          <branch name="from">
+            <branch name="a">
+              <branch name="1">
+                <branch name="id">
+                  <data value="7"></data>
+                </branch>
+                <branch name="x">
+                  <data value="10"></data>
+                </branch>
+              </branch>
+              <branch name="2">
+                <branch name="id">
+                  <data value="7"></data>
+                </branch>
+                <branch name="x">
+                  <data value="10"></data>
+                </branch>
+              </branch>
+              <branch name="3">
+                <branch name="id">
+                  <data value="7"></data>
+                </branch>
+                <branch name="x">
+                  <data value="10"></data>
+                </branch>
+              </branch>
+            </branch>
+            <branch name="b">
+              <branch name="1">
+                <branch name="id">
+                  <data value="7"></data>
+                </branch>
+                <branch name="x">
+                  <data value="10"></data>
+                </branch>
+              </branch>
+              <branch name="2">
+                <branch name="id">
+                  <data value="7"></data>
+                </branch>
+                <branch name="x">
+                  <data value="10"></data>
+                </branch>
+              </branch>
+              <branch name="3">
+                <branch name="id">
+                  <data value="7"></data>
+                </branch>
+                <branch name="x">
+                  <data value="10"></data>
+                </branch>
+              </branch>
+            </branch>
+          </branch>
+        </function>
+      </branch>
+    </branch>
+  </branch>
+  <branch name="d">
+    <branch name="opis">
+      <data value="puste poddrzewo"></data>
+    </branch>
+    <branch name="x"></branch>
+  </branch>
+</root>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:group ref="nodeContent" />
+    </xs:complexType>
+    <xs:unique name="rootBranchName">
+      <xs:selector xpath="branch" />
+      <xs:field xpath="@name" />
+    </xs:unique>
+  </xs:element>
+  <xs:group name="nodeContent">
+    <xs:choice>
+      <xs:element ref="branch" maxOccurs="unbounded" minOccurs="0" />
+      <xs:element name="data">
+        <xs:complexType>
+          <xs:attribute name="value" type="xs:string" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="reference">
+        <xs:complexType>
+          <xs:attribute name="path" type="xs:string" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="function">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="branch" maxOccurs="unbounded" minOccurs="0"></xs:element>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" />
+        </xs:complexType>
+        <xs:unique name="localParameterName">
+          <xs:selector xpath="branch" />
+          <xs:field xpath="@name" />
+        </xs:unique>
+      </xs:element>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="branch">
+    <xs:complexType>
+      <xs:group ref="nodeContent" />
+      <xs:attribute name="name" type="xs:string" use="required" />
+    </xs:complexType>
+    <xs:unique name="localBranchName">
+      <xs:selector xpath="branch" />
+      <xs:field xpath="@name" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
