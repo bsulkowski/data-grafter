@@ -3,36 +3,40 @@ package pl.bsulkowski.datagrafter
 abstract class DataGrafterTree {
   abstract class Element {
     def parent: Option[Element]
-    def parentBranch: Option[String]
+    def branchName: Option[String]
 
     def branches: Map[String, Element]
-    def addBranch(branch: String, element: Element): Unit
-    def removeBranch(branch: String): Unit
+    def addBranch(branchName: String, element: Element): Option[Element]
+    def removeBranch(branchName: String): Option[Element]
 
-    def data: Option[Int]
-    def expandReference: Option[ReferenceDefinitionElement]
-    def expandFunction: Option[FunctionDefinitionElement]
+    def data: Option[Value]
+    def expandReference: Option[ReferenceDefinition]
+    def expandComputation: Option[ComputationDefinition]
 
     def copy(): Element
     def delete(): Unit
   }
-  abstract class ReferenceDefinitionElement extends Element {
+  abstract class ReferenceDefinition extends Element {
     def path: Path
     def follow: Element
   }
-  abstract class FunctionDefinitionElement extends Element {
-    def function: String
-    def evaluate: Element
+  abstract class ComputationDefinition extends Element {
+    def function: Function
+    def compute: Element
   }
 
   def root: Element
   def createNode(): Element
-  def createData(value: Int): Element
+  def createData(value: Value): Element
   def createReference(path: Path): Element
-  def createFunction(function: String): Element
+  def createComputation(function: Function): Element
 
-  abstract class Path{
-    def stepDown(branch: String): Path
+  type Value = String
+
+  abstract class Function
+
+  abstract class Path {
+    def stepDown(branchName: String): Path
     def stepBack: Path
   }
 
