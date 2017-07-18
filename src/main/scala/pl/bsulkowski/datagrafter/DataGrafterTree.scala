@@ -3,7 +3,7 @@ package pl.bsulkowski.datagrafter
 abstract class DataGrafterTree {
   abstract class Element {
     def parent: Option[Element]
-    def branchName: Option[String]
+    def sourceBranchName: Option[String]
 
     def branches: Map[String, Element]
     def addBranch(branchName: String, element: Element): Option[Element]
@@ -16,14 +16,8 @@ abstract class DataGrafterTree {
     def copy(): Element
     def delete(): Unit
   }
-  abstract class ReferenceDefinition extends Element {
-    def path: Path
-    def follow: Element
-  }
-  abstract class ComputationDefinition extends Element {
-    def function: Function
-    def compute: Element
-  }
+  abstract class ReferenceDefinition(val path: Path) extends Element
+  abstract class ComputationDefinition(val function: Function) extends Element
 
   def root: Element
   def createNode(): Element
@@ -33,13 +27,12 @@ abstract class DataGrafterTree {
 
   type Value = String
 
-  abstract class Function
-
-  abstract class Path {
-    def stepDown(branchName: String): Path
-    def stepBack: Path
+  abstract class Function {
+    def compute(arguments: Map[String, Element]): Element
   }
+  def standardFunction(functionName: String): Function
 
-  def rootAbsolutePath: Path
-  def ancestorRelativePath(levels: Int): Path
+  abstract class Path
+  case class AbsolutePath(branchNames: List[String]) extends Path
+  case class RelativePath(parentCount: Int, branchNames: List[String]) extends Path
 }
