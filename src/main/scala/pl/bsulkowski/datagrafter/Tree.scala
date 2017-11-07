@@ -1,5 +1,15 @@
 package pl.bsulkowski.datagrafter
 
+/** Contains data and computations organized in a mutable directed tree structure.
+  *
+  * Branch names allow unique identification of any tree element by path from root.
+  * Allows use of references between tree elements, that work like symbolic links for files.
+  * Tree branches and references together must form a DAG structure.
+  *
+  * Computations are represented by nodes with defined function and arguments passed in branches.
+  *
+  * Primitive data values can be stored only in leafs.
+  */
 abstract class Tree {
   abstract class Element {
     def parent: Option[Element]
