@@ -14,7 +14,6 @@ abstract class Tree {
   /** 
     * 
     */
- 
   abstract class Element {
     /** Parent Element of this or None in case of a root.
       * 
@@ -27,13 +26,25 @@ abstract class Tree {
       */
     def parentBranch: Option[String]
 
-    /** Map of branch names to child Elements of this.
+    /** Returns all branches of the node Element eventually resolved from this Element.
+      * 
+      * Branches for given node Element has unique names and map to direct child Elements.
       */
     def branches: Map[String, Element]
-    def addBranch(name: String, element: Element): Option[Element]
+    /** Attempts to add a branch for the node Element eventually resolved from this Element.
+      * 
+      * Returns None in case of success or that Element in case of failure.
+      * Parent information of that Element is updated accordingly.
+      */
+    def addBranch(name: String, that: Element): Option[Element]
+    /** Attempts to remove a branch for the node Element eventually resolved from this Element.
+      * 
+      * Returns detached Element in case of success or None in case of failure.
+      * Parent information of detached Element is updated accordingly.
+      */
     def removeBranch(name: String): Option[Element]
 
-    /** Returns Data contained in data Element.
+    /** Returns Data contained in the data Element eventually resolved from this Element.
       */
     def data: Option[Data]
     /** Returns Graft used to define this graft Element.
