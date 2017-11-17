@@ -12,23 +12,19 @@ package pl.bsulkowski.datagrafter
   */
 abstract class Tree {
 
-  /** The root Element of this Tree.
-    *
-    * There may exist roots of other subtrees not connected to the main tree,
-    * but they are not tracked explicitly.
-    */
-  val root: Element
+  type Element <: ElementView
 
   /**
-    * 
+    *
     */
-  abstract class Element {
+  trait ElementView {
 
-    /** Returns Handle to this or None in case of a root.
+    /** Returns handle to this or None in case of a root.
       * 
+      * Handle consists of parent Element and branch name.
       * For elements that define a Graft it is the parent of corresponding graft Element.
       */
-    def handle: Option[Handle]
+    def handle: Option[(Element, String)]
 
     /** Returns the Content of the Element eventually resolved from this Element.
       */
@@ -39,10 +35,8 @@ abstract class Tree {
     def graft: Option[Graft]
   }
 
-  case class Handle(parent: Element, branch: String)
-
   abstract class Content
-  case class BranchesContent(branches: scala.collection.mutable.Map[String, Element]) extends Content
+  case class NodeContent(branches: scala.collection.mutable.Map[String, Element]) extends Content
   case class DataContent(data: String) extends Content
   case class FunctionContent(function: (Element => Element)) extends Content
   case class ErrorContent(error: String) extends Content
@@ -51,6 +45,13 @@ abstract class Tree {
   case class ReferenceGraft(target: Path) extends Graft
   case class ApplicationGraft(function: Element, arguments: Element) extends Graft
   case class FunctionGraft(arguments: Element, result: Element) extends Graft
+
+  /** The root Element of this Tree.
+    *
+    * There may exist roots of other subtrees not connected to the main tree,
+    * but they are not tracked explicitly.
+    */
+  val root: Element
 
   def createNodeElement(): Element
   def createDataElement(data: String): Element
